@@ -20,3 +20,20 @@ def test_ingest_request_rejects_invalid_url():
     with pytest.raises(ValidationError):
         IngestRequest(url = "url-invalida")
 
+
+# test para probar la creacion del modelo de ScrapedPage 
+
+def test_scraped_page_creation():
+    # Creacion de modelo
+    page = ScrapedPage(
+        url = "https://example.com",
+        title = "Example",
+        text = "Hello World",
+        fetched_at = datetime.now(timezone.utc),
+        status_code = "200",
+    )
+
+    # esperado
+    assert page.status_code == 200
+    assert page.title == "Example"
+
