@@ -18,7 +18,10 @@ class ScrapeError(Exception):
 
 
 async def fetch_and_parse(url: str) -> ScrapedPage:
-    """" """
+    """" GET de la url, parsearla, retornar un objeto de ScrapedPage validado
+    try/except 1. para errores httpx.RequestError
+    2. para cuando el servidor responde pero con un codigo 400/50
+    """
 
     try: 
         # usar AsyncClient (context manager) para abrir las conexiones 
@@ -53,7 +56,7 @@ async def fetch_and_parse(url: str) -> ScrapedPage:
     return ScrapedPage( #devolver objeto scrapedPage con lo que parseamos ya
         url = url,
         title = title,
-        text = text[:MAX_TEXT_CHARS], # despues del formateo nada mas 5000 chars
+        text = text[:MAX_TEXT_CHARS], # despues del formateo nada mas 5000 carac
         fetched_at = datetime.now(timezone.utc),
         status_code = response.status_code,
     )
